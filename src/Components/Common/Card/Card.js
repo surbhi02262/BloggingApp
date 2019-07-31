@@ -1,26 +1,47 @@
 import React from 'react';
-import {Card,CardHeader,CardContent,withStyles} from '@material-ui/core';
+import {Card,CardHeader,CardActions,Typography,CardContent,CardActionArea,CardMedia,withStyles} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 const styles = (theme) => ({
     card: {
-      maxWidth: 475,
+      maxWidth: 500,
       margin:'0 auto',
-    //   padding: theme.spacing(1)
     },
+    media: {
+        width:"100%",
+        height: '200px'
+      },
     head: {
         textAlign: 'center',
-        background:'#49688E',
+        background:'#0B3763',
         color:'white',
-        padding:'25px 0px',
+        letterSpacing: '3px',
+        fontSize:'40px',
+        padding:'40px 0px',
     },
+    actions:{
+        padding:'0px 9px',
+    }
 })
+
 const CustomizedCard = (props) =>{
-    const{classes,children,title,cls} = props;
+    const{classes,children,title,cls,img,getButtons} = props;
     return(
-        <Card className={`${classes.card} ${cls}`}> 
-            <CardHeader className={classes.head} title={title} />
-            <CardContent>{children}</CardContent>       
+        <Card className={`${classes.card} ${cls}`}>        
+            {img && <CardMedia
+                className={classes.media}
+                image={img}
+               
+                />}
+                {title && (
+                <CardHeader className={classes.head} 
+                    title={<Typography className={classes.typoText} variant="h4">{title}</Typography>}
+                />
+            )}
+            <CardContent className={classes.contentPad}>{children}</CardContent>        
+            {getButtons && <CardActions className={classes.actions}>{getButtons}</CardActions>}
         </Card>
     )
 }
+
 export default withStyles(styles)(CustomizedCard);

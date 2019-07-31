@@ -1,36 +1,38 @@
 export const addPostMessage = (postData) =>{
+    let user = localStorage.getItem('userDetail');
+    let post = localStorage.getItem('Posts');
     return (dispatch,getState) =>{
-       let user = localStorage.getItem('userDetail');
-        let post = localStorage.getItem('Posts');
-        console.log('post',post);
+       
          if(post === null || post === "" ){
             postData.id= Math.floor((Math.random() * 100)+1); 
-            postData.createdBy='ss';
-            postData.time= new Date().toString();
+            postData.user_id= user[0].id
+            postData.posted_at= new Date().toString();
             localStorage.setItem('Posts',JSON.stringify([postData]));
             dispatch({
                 type:"ADD_POST",
                 data:post,
             })
         }
-       else if(user !== null && user !== "" && post !== null && post !== ""){
+       else if(user !== null && user !== "[]" && post !== null && post !== ""){
             user=  JSON.parse(user);
             post=  JSON.parse(post);
+
             postData.id= Math.floor((Math.random() * 100)+1); 
-            postData.createdBy=user.firstName;
-            postData.time= new Date().toString();
+            postData.user_id= user[0].id
+            postData.posted_at= new Date().toString();
             post.push(postData)  ;
+            console.log('postData',postData);
             localStorage.setItem('Posts',JSON.stringify(post));
             dispatch({
                 type:"ADD_POST",
                 data:post,
             })
       }
-     else if(post !== null && post !== ""){
+     else if(post !== null && post !== "" && user[0]){
         post=  JSON.parse(post);
-        postData.createdBy='FFF';
         postData.id= Math.floor((Math.random() * 100)+1); 
-        postData.time= new Date().toString();
+        postData.user_id= -1
+        postData.posted_at= new Date().toString();
         post.push(postData)  ;
         localStorage.setItem('Posts',JSON.stringify(post));
         dispatch({
@@ -41,8 +43,8 @@ export const addPostMessage = (postData) =>{
        else{
         post=  JSON.parse(post);
         postData.id= Math.floor((Math.random() * 100)+1); 
-        postData.createdBy="Anonymous User";
-        postData.time= new Date().toString();
+        postData.user_id= -1
+        postData.posted_at= new Date().toString();
         post.push(postData)  ;
         localStorage.setItem('Posts',JSON.stringify(post));
         dispatch({

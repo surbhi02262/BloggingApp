@@ -6,6 +6,8 @@ import Card from '../Common/Card/Card';
 import {connect} from 'react-redux';
 import {addUser} from '../../Store/SignUp/actionCreator';
 import {withRouter} from 'react-router-dom';
+import { Paper } from '@material-ui/core';
+
 let signUpData={}
 class SignUp extends React.Component{
     handleChange =(name,value) =>{
@@ -18,7 +20,9 @@ class SignUp extends React.Component{
     }
     render(){      
         return (
-            <div className="sign-up-container">
+            <Paper className="signup-container">
+            <div className="backdrop">
+            <div className="signup-wrapper">
                 <Card title="SIGN UP">
                     <div className="form-container">
                         {signUpConfig.map(({name,type,placeholder}) => <InputField name={name} 
@@ -28,7 +32,9 @@ class SignUp extends React.Component{
                         <Button onClick={this.onSubmit}>Sign Up</Button>
                     </div>
                 </Card>
-            </div>
+                </div>
+                    </div>
+                </Paper>
         )
     }
 }

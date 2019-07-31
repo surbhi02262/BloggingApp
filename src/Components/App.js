@@ -11,10 +11,10 @@ import {getLogggedInUser} from '../Store/Login/actionCreator';
 import CreatePost from './Common/Post/CreatePost';
 import DisplayPost from './Common/Post/DisplayPost';
 import EditPost from './Common/Post/EditPost';
-
+import {appSetup} from '../Store/App/action'
 class  App extends Component {
   componentDidMount(){
-    this.props.getLogggedInUser();
+    this.props.appSetup();
   }
   render(){
     const {isLogedIn} = this.props
@@ -43,6 +43,6 @@ const mapStateToProps = (state) =>({
   isLogedIn: state.Login.status
 })
 const mapDispatchToProps = {
-  getLogggedInUser
+  appSetup
 }
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App))

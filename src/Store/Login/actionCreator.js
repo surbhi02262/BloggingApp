@@ -4,16 +4,15 @@ export const validateUser = (data) =>{
         let filteredUser = [];
         if(user !== null && user !== ""){
             user = JSON.parse(user);
-            filteredUser = user.filter((userData,index) => userData.email === data.email && userData.password === data.password);
+            filteredUser = user.filter((userData,index) => userData.email === data.email && userData.password.toString() === data.password.toString());
         }
+        console.log('filteredUser',filteredUser);
         if(filteredUser.length > 0 ){
-            data.firstName=data.email;
-            localStorage.setItem('userDetail', JSON.stringify(data));
-            debugger;
+            localStorage.setItem('userDetail', JSON.stringify(filteredUser));
             dispatch({
                
                 type:"VALIDATE_USER",
-                data
+                filteredUser
             })
         }else{
             dispatch({
@@ -45,7 +44,7 @@ export const getLogggedInUser = () =>{
 }
 export const handleLogout = () =>{
     return (dispatch) =>{
-        localStorage.setItem('userDetail',"")
+        localStorage.setItem('userDetail',"[]")
             dispatch({
                 type:"LOGOUT",
                 data: ""

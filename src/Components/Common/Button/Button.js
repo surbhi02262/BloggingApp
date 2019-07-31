@@ -10,16 +10,19 @@ const styles = theme => ({
     },
     btn:{
         width:'100%',
-        background: '#49688E',
-        padding:theme.spacing(1),
+        background: '#0B3763',
+        fontSize:'17px',
+        '&:hover':{
+            background: '#0B3763',
+        }
     },
 })
 
 const CustomizedButtons =(props)=> {
-    const { classes,children } = props;
+    const { classes,children ,classNam} = props;
         return (
             <Button variant="contained" color="primary" {...props}
-                className={classNames(classes.margin, classes.btn)}>
+                className= { classNam ||  classNames(classes.margin, classes.btn)}>
                     {children}
             </Button>
         );

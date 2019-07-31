@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {LoginConfig} from './LoginConfig';
+import { Paper } from '@material-ui/core';
+
 import InputField from '../Common/InputField/InputField';
 import Card from '../Common/Card/Card';
 import Button from '../Common/Button/Button';
@@ -21,15 +23,19 @@ class Login extends Component {
             this.props.history.push('/')
         }
         return (
-            <div className="login-container">
-                <Card title="LOGIN">
-                    <div className="form-container">
-                        {LoginConfig.map(({name,type,placeholder}) => <InputField name={name} type={type} 
-                                    placeholder={placeholder} onChange={this.handleChange}/>)}
-                        <Button onClick={this.onSubmit}>Login</Button>
+                <Paper className="login-container">
+                    <div className="backdrop">
+                    <div className="login-wrapper">
+                    <Card title="LOGIN">
+                        <div className="form-container">
+                            {LoginConfig.map(({name,type,placeholder}) => <InputField name={name} type={type} 
+                                        placeholder={placeholder} onChange={this.handleChange}/>)}
+                            <Button onClick={this.onSubmit}>Login</Button>
+                        </div>
+                    </Card>
                     </div>
-                </Card>
-            </div>
+                    </div>
+                </Paper>
         );
     }
 }

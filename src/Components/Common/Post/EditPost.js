@@ -7,14 +7,29 @@ import {withRouter} from 'react-router-dom';
 import {getConfig} from '../../../Services/Configs'
 import {CreatePostConfig} from './PostConfig'
 import {editPostt} from '../../../Store/Post/actionCreator';
+import Notification from '../SnackBar/SnackBar';
 
 let editPostData ={}
 class EditPost extends Component {
+    state={
+        open:false,
+        message:""
+    }
+    handleNotification = () =>{
+        this.setState({open:false});
+    }
     handleChange =(name,value)=>{
         editPostData[name]=value;
     }
     handleEditChange = (dataToEdit) =>{
-        this.props.editPostt(editPostData)
+        let that = this
+        this.setState({open:true,message:"Editing Post..."}, function(){
+            setTimeout(function(){
+                that.props.editPostt(editPostData)
+            },2000)
+            
+        });
+        
 
     }
     getPostDataById = () => {
@@ -25,13 +40,13 @@ class EditPost extends Component {
     }
     render() {      
         const{postData}= this.props;
+        const{open,message} = this.state;
+
         let filteredData = postData.length >  0 ? this.getPostDataById() :[];
-        console.log('filteredData',filteredData);
         if(filteredData.length === 0) {
             this.props.history.push('/')
         }
         let config = getConfig(filteredData[0], CreatePostConfig)
-        console.log("Config : ",config)
         if(this.props.isEditSuccess){
             this.props.history.push('/');
         }
@@ -39,11 +54,22 @@ class EditPost extends Component {
             <div className="login-container">
             <Card title="Edit POST">
                 <div className="form-container">
-                    {config.map(({name,type,placeholder,value}) => <InputField value={value} name={name} type={type} 
+                    {config.map(({name,type,placeholder,value}) => type === 'file' 
+                    ? <>
+                    <img src={value} alt="image" style={{
+                        width:"100%",
+                        height: '200px'
+                    }}/>
+                    <InputField value={""} name={name} type={type} 
+                                    placeholder={placeholder} onChange={this.handleChange}/>
+                    </> 
+                    : <InputField value={value} name={name} type={type} 
                                     placeholder={placeholder} onChange={this.handleChange}/>)}
                     <Button onClick={() => this.handleEditChange(filteredData)}>Edit Post</Button>
                 </div>
             </Card>
+            <Notification open={open} onClose={this.handleNotification} message={message}/>
+
         </div>
         );
     }

@@ -11,7 +11,7 @@ const styles = theme => ({
   },
 });
 
-class SimpleSnackbar extends React.Component {
+class Notification extends React.Component {
   state = {
     open: false,
   };
@@ -29,41 +29,37 @@ class SimpleSnackbar extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes,open,onClose ,message} = this.props;
     return (
-      <div>
-        <Button onClick={this.handleClick}>Open simple snackbar</Button>
+
+        
         <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',
           }}
-          open={this.state.open}
+          open={open}
           autoHideDuration={6000}
           onClose={this.handleClose}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">msg</span>}
+          message={<span id="message-id">{message}</span>}
           action={[
-            <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-              UNDO
-            </Button>,
             <IconButton
               key="close"
               aria-label="Close"
               color="inherit"
               className={classes.close}
-              onClick={this.handleClose}
+              onClick={()=> onClose()}
             >
               <CloseIcon />
             </IconButton>,
           ]}
         />
-      </div>
+
     );
   }
 }
 
-
-export default withStyles(styles)(SimpleSnackbar);
+export default withStyles(styles)(Notification);
